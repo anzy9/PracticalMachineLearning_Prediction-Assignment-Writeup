@@ -1,0 +1,104 @@
+---
+title: "Prediction Assignment Writeup "
+author: "Anjali Singh"
+date: "16 October 2017"
+output:
+  html_document:
+    keep_md: yes
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+## Background
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://web.archive.org/web/20161224072740/http:/groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
+
+## Data
+Data
+
+The data for this project come from this source: http://web.archive.org/web/20161224072740/http:/groupware.les.inf.puc-rio.br/ha
+
+Training data
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
+
+Test data
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
+
+## Libraries
+```{r}
+library(caret)
+library(randomForest)
+```
+## Loading Data
+```{r}
+rm(list=ls())  
+tlink <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+vlink <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+training <- read.csv(url(tlink))
+validation<- read.csv(url(vlink))
+```
+## Data Processing
+Removing the near zero variance, NA values. We then removed the first 7 columns as they were not related to the classe variable. We also divided the data into Train and Test set
+```{r, results="hide"}
+nzv <- nearZeroVar(training)
+training<-training[,-nzv]
+
+#removing predictors with NA values
+training<-training[,colSums(is.na(training))==0]
+training<-training[,-c(1:7)]
+training$classe = factor(training$classe)
+#Partition the data into Training and Testing
+inTrain <- createDataPartition(y=training$classe, p=0.7, list=F)
+training <- training[inTrain, ]
+testing <- training[-inTrain, ]
+```
+## Cross Validation
+We will be doing 3 fold cross validation to train our model using first Rtree method and then random
+forest method later. The one with better accuracy will be selected the right model technique.
+```{r,results="hide"}
+set.seed(9999)
+cv = trainControl(method="cv",number=5,allowParallel=TRUE,verboseIter=TRUE)
+modelrf = train(classe~., data=training, method="rf",trControl=cv)#Randon forest
+modeltree = train(classe~.,data=training,method="rpart",trControl=cv)# RTree
+```
+Checking for accurancy on training and testing data.
+For random forest
+```{r}
+
+#training data
+prediction_rf1 <- predict(modelrf,newdata=training)
+confusionMatrix(prediction_rf1,training$classe)
+#testing data
+prediction_rf2 <- predict(modelrf,newdata=testing)
+confusionMatrix(prediction_rf2,testing$classe)
+```
+For RTree
+```{r}
+#training data
+prediction_tree1 <- predict(modeltree,newdata=training)
+confusionMatrix(prediction_tree1,training$classe)
+prediction_tree2 <- predict(modeltree,newdata=testing)
+confusionMatrix(prediction_tree2,testing$classe)
+#testing data
+```
+The accuracy for Rtree(.59)is less than Random Forest(1). We will use Random forest on validation data
+
+## Validation
+```{r}
+nzv <- nearZeroVar(validation)
+validation<-validation[,-nzv]
+
+#removing predictors with NA values
+validation<-validation[,colSums(is.na(validation))==0]
+validation<-validation[,-c(1:7)]
+
+predictionFinal<- predict(modelrf, newdata=validation)
+predictionFinal
+```
+## Conclusion
+We got all the prediction right
+
+
+
