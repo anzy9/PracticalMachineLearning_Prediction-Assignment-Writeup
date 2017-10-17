@@ -27,7 +27,7 @@ Test data
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
 
 ## Libraries
-```{r}
+```{r,warning=FALSE}
 library(caret)
 library(randomForest)
 ```
@@ -41,7 +41,7 @@ validation<- read.csv(url(vlink))
 ```
 ## Data Processing
 Removing the near zero variance, NA values. We then removed the first 7 columns as they were not related to the classe variable. We also divided the data into Train and Test set
-```{r, results="hide"}
+```{r, results="hide",warning=FALSE}
 nzv <- nearZeroVar(training)
 training<-training[,-nzv]
 
@@ -65,26 +65,30 @@ modeltree = train(classe~.,data=training,method="rpart",trControl=cv)# RTree
 ```
 Checking for accurancy on training and testing data.
 For random forest
-```{r}
+```{r,results=FALSE}
 
 #training data
 prediction_rf1 <- predict(modelrf,newdata=training)
 confusionMatrix(prediction_rf1,training$classe)
+```
+```{r}
 #testing data
 prediction_rf2 <- predict(modelrf,newdata=testing)
 confusionMatrix(prediction_rf2,testing$classe)
 ```
 For RTree
-```{r}
+```{r,results=FALSE}
 #training data
 prediction_tree1 <- predict(modeltree,newdata=training)
 confusionMatrix(prediction_tree1,training$classe)
+```
+```{r}
 #testing data
 prediction_tree2 <- predict(modeltree,newdata=testing)
 confusionMatrix(prediction_tree2,testing$classe)
 
 ```
-The accuracy for Rtree(.59)is less than Random Forest(1). We will use Random forest on validation data
+The accuracy for Rtree(.49)is less than Random Forest(0.99). We will use Random forest on validation data
 
 ## Validation
 ```{r}

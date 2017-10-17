@@ -22,45 +22,7 @@ https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
 
 ```r
 library(caret)
-```
-
-```
-## Warning: package 'caret' was built under R version 3.4.2
-```
-
-```
-## Loading required package: lattice
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```r
 library(randomForest)
-```
-
-```
-## Warning: package 'randomForest' was built under R version 3.4.2
-```
-
-```
-## randomForest 4.6-12
-```
-
-```
-## Type rfNews() to see new features/changes/bug fixes.
-```
-
-```
-## 
-## Attaching package: 'randomForest'
-```
-
-```
-## The following object is masked from 'package:ggplot2':
-## 
-##     margin
 ```
 ## Loading Data
 
@@ -106,40 +68,6 @@ prediction_rf1 <- predict(modelrf,newdata=training)
 confusionMatrix(prediction_rf1,training$classe)
 ```
 
-```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction    A    B    C    D    E
-##          A 3906    0    0    0    0
-##          B    0 2658    0    0    0
-##          C    0    0 2396    0    0
-##          D    0    0    0 2252    0
-##          E    0    0    0    0 2525
-## 
-## Overall Statistics
-##                                      
-##                Accuracy : 1          
-##                  95% CI : (0.9997, 1)
-##     No Information Rate : 0.2843     
-##     P-Value [Acc > NIR] : < 2.2e-16  
-##                                      
-##                   Kappa : 1          
-##  Mcnemar's Test P-Value : NA         
-## 
-## Statistics by Class:
-## 
-##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            1.0000   1.0000   1.0000   1.0000   1.0000
-## Specificity            1.0000   1.0000   1.0000   1.0000   1.0000
-## Pos Pred Value         1.0000   1.0000   1.0000   1.0000   1.0000
-## Neg Pred Value         1.0000   1.0000   1.0000   1.0000   1.0000
-## Prevalence             0.2843   0.1935   0.1744   0.1639   0.1838
-## Detection Rate         0.2843   0.1935   0.1744   0.1639   0.1838
-## Detection Prevalence   0.2843   0.1935   0.1744   0.1639   0.1838
-## Balanced Accuracy      1.0000   1.0000   1.0000   1.0000   1.0000
-```
-
 ```r
 #testing data
 prediction_rf2 <- predict(modelrf,newdata=testing)
@@ -151,33 +79,33 @@ confusionMatrix(prediction_rf2,testing$classe)
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 1173    0    0    0    0
-##          B    0  789    0    0    0
-##          C    0    0  723    0    0
-##          D    0    0    0  673    0
-##          E    0    0    0    0  764
+##          A 1182    3    0    0    0
+##          B    1  769    0    0    0
+##          C    0    0  750    2    0
+##          D    0    0    0  657    0
+##          E    0    0    0    0  765
 ## 
 ## Overall Statistics
-##                                      
-##                Accuracy : 1          
-##                  95% CI : (0.9991, 1)
-##     No Information Rate : 0.2846     
-##     P-Value [Acc > NIR] : < 2.2e-16  
-##                                      
-##                   Kappa : 1          
-##  Mcnemar's Test P-Value : NA         
+##                                           
+##                Accuracy : 0.9985          
+##                  95% CI : (0.9968, 0.9995)
+##     No Information Rate : 0.2865          
+##     P-Value [Acc > NIR] : < 2.2e-16       
+##                                           
+##                   Kappa : 0.9982          
+##  Mcnemar's Test P-Value : NA              
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            1.0000   1.0000   1.0000   1.0000   1.0000
-## Specificity            1.0000   1.0000   1.0000   1.0000   1.0000
-## Pos Pred Value         1.0000   1.0000   1.0000   1.0000   1.0000
-## Neg Pred Value         1.0000   1.0000   1.0000   1.0000   1.0000
-## Prevalence             0.2846   0.1914   0.1754   0.1633   0.1853
-## Detection Rate         0.2846   0.1914   0.1754   0.1633   0.1853
-## Detection Prevalence   0.2846   0.1914   0.1754   0.1633   0.1853
-## Balanced Accuracy      1.0000   1.0000   1.0000   1.0000   1.0000
+## Sensitivity            0.9992   0.9961   1.0000   0.9970   1.0000
+## Specificity            0.9990   0.9997   0.9994   1.0000   1.0000
+## Pos Pred Value         0.9975   0.9987   0.9973   1.0000   1.0000
+## Neg Pred Value         0.9997   0.9991   1.0000   0.9994   1.0000
+## Prevalence             0.2865   0.1870   0.1816   0.1596   0.1853
+## Detection Rate         0.2863   0.1862   0.1816   0.1591   0.1853
+## Detection Prevalence   0.2870   0.1865   0.1821   0.1591   0.1853
+## Balanced Accuracy      0.9991   0.9979   0.9997   0.9985   1.0000
 ```
 For RTree
 
@@ -185,40 +113,6 @@ For RTree
 #training data
 prediction_tree1 <- predict(modeltree,newdata=training)
 confusionMatrix(prediction_tree1,training$classe)
-```
-
-```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction    A    B    C    D    E
-##          A 3555 1102 1125 1058  587
-##          B   56  908   75  381  494
-##          C  200  277 1028  297  317
-##          D   92  370  168  516  383
-##          E    3    1    0    0  744
-## 
-## Overall Statistics
-##                                           
-##                Accuracy : 0.4914          
-##                  95% CI : (0.4831, 0.4998)
-##     No Information Rate : 0.2843          
-##     P-Value [Acc > NIR] : < 2.2e-16       
-##                                           
-##                   Kappa : 0.3345          
-##  Mcnemar's Test P-Value : < 2.2e-16       
-## 
-## Statistics by Class:
-## 
-##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            0.9101   0.3416  0.42905  0.22913  0.29465
-## Specificity            0.6061   0.9092  0.90380  0.91180  0.99964
-## Pos Pred Value         0.4787   0.4744  0.48513  0.33748  0.99465
-## Neg Pred Value         0.9444   0.8520  0.88225  0.85780  0.86288
-## Prevalence             0.2843   0.1935  0.17442  0.16394  0.18381
-## Detection Rate         0.2588   0.0661  0.07483  0.03756  0.05416
-## Detection Prevalence   0.5407   0.1393  0.15425  0.11131  0.05445
-## Balanced Accuracy      0.7581   0.6254  0.66642  0.57046  0.64715
 ```
 
 ```r
@@ -232,35 +126,35 @@ confusionMatrix(prediction_tree2,testing$classe)
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 1066  334  339  316  184
-##          B   19  264   31  119  155
-##          C   55   91  305   88   89
-##          D   31  100   48  150  115
-##          E    2    0    0    0  221
+##          A 1052  307  332  306  185
+##          B   23  271   22  124  155
+##          C   77   80  342   80  113
+##          D   29  114   54  149  108
+##          E    2    0    0    0  204
 ## 
 ## Overall Statistics
-##                                          
-##                Accuracy : 0.4867         
-##                  95% CI : (0.4713, 0.502)
-##     No Information Rate : 0.2846         
-##     P-Value [Acc > NIR] : < 2.2e-16      
-##                                          
-##                   Kappa : 0.3279         
-##  Mcnemar's Test P-Value : < 2.2e-16      
+##                                           
+##                Accuracy : 0.4887          
+##                  95% CI : (0.4734, 0.5041)
+##     No Information Rate : 0.2865          
+##     P-Value [Acc > NIR] : < 2.2e-16       
+##                                           
+##                   Kappa : 0.3312          
+##  Mcnemar's Test P-Value : < 2.2e-16       
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            0.9088  0.33460  0.42185  0.22288  0.28927
-## Specificity            0.6022  0.90279  0.90497  0.91476  0.99940
-## Pos Pred Value         0.4761  0.44898  0.48567  0.33784  0.99103
-## Neg Pred Value         0.9432  0.85144  0.88037  0.85780  0.86073
-## Prevalence             0.2846  0.19141  0.17540  0.16327  0.18535
-## Detection Rate         0.2586  0.06405  0.07399  0.03639  0.05361
-## Detection Prevalence   0.5432  0.14265  0.15235  0.10771  0.05410
-## Balanced Accuracy      0.7555  0.61870  0.66341  0.56882  0.64434
+## Sensitivity            0.8893  0.35104  0.45600  0.22610  0.26667
+## Specificity            0.6164  0.90349  0.89642  0.91210  0.99941
+## Pos Pred Value         0.4821  0.45546  0.49422  0.32819  0.99029
+## Neg Pred Value         0.9327  0.85823  0.88129  0.86122  0.85700
+## Prevalence             0.2865  0.18697  0.18164  0.15960  0.18527
+## Detection Rate         0.2548  0.06563  0.08283  0.03609  0.04941
+## Detection Prevalence   0.5285  0.14410  0.16760  0.10995  0.04989
+## Balanced Accuracy      0.7528  0.62726  0.67621  0.56910  0.63304
 ```
-The accuracy for Rtree(.59)is less than Random Forest(1). We will use Random forest on validation data
+The accuracy for Rtree(.49)is less than Random Forest(0.99). We will use Random forest on validation data
 
 ## Validation
 
