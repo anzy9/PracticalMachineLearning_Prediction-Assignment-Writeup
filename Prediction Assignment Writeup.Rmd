@@ -79,9 +79,10 @@ For RTree
 #training data
 prediction_tree1 <- predict(modeltree,newdata=training)
 confusionMatrix(prediction_tree1,training$classe)
+#testing data
 prediction_tree2 <- predict(modeltree,newdata=testing)
 confusionMatrix(prediction_tree2,testing$classe)
-#testing data
+
 ```
 The accuracy for Rtree(.59)is less than Random Forest(1). We will use Random forest on validation data
 

@@ -222,6 +222,7 @@ confusionMatrix(prediction_tree1,training$classe)
 ```
 
 ```r
+#testing data
 prediction_tree2 <- predict(modeltree,newdata=testing)
 confusionMatrix(prediction_tree2,testing$classe)
 ```
@@ -258,10 +259,6 @@ confusionMatrix(prediction_tree2,testing$classe)
 ## Detection Rate         0.2586  0.06405  0.07399  0.03639  0.05361
 ## Detection Prevalence   0.5432  0.14265  0.15235  0.10771  0.05410
 ## Balanced Accuracy      0.7555  0.61870  0.66341  0.56882  0.64434
-```
-
-```r
-#testing data
 ```
 The accuracy for Rtree(.59)is less than Random Forest(1). We will use Random forest on validation data
 
